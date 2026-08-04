@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "specopt"
+version = "0.1.0"
+description = "Joint optimisation of spectral preprocessing and regression-model complexity for chemometrics."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Nikesh" }]
+keywords = ["chemometrics", "spectroscopy", "preprocessing", "PLS", "NIR", "FTIR", "particle swarm", "optimisation"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+dependencies = [
+    "numpy>=1.21",
+    "scipy>=1.7",
+    "scikit-learn>=1.0",
+    "pyswarm>=0.6",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
