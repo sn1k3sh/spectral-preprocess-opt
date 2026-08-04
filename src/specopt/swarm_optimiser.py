@@ -84,10 +84,11 @@ def optimise_preprocessing(
         np.random.seed(random_state)
 
     lb, ub = space.bounds()
-    best_vec, best_rmse = pso(
+    result = pso(
         objective, lb, ub,
         swarmsize=swarmsize, maxiter=maxiter,
         omega=omega, phip=phip, phig=phig,
         minstep=1e-8, minfunc=1e-8,
     )
+    best_vec, best_rmse = result[0], result[1]
     return PreprocessResult(params=vector_to_params(best_vec), rmse=float(best_rmse))
