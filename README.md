@@ -65,9 +65,13 @@ Arguments to `optimise_preprocessing`:
 
 ## Demonstration
 
-On the public Beer NIR dataset, `optimise_preprocessing` cuts PLS test RMSE by a mean of 
-43% (median 42%) across 15 random 90/10 splits — mean RMSE 0.224 → 0.115. The spread is 
-wide (roughly +11% to +80%) because each split's test set is only 8 samples.
+On the public Beer NIR dataset, optimise_preprocessing cuts PLS test RMSE by a mean of 43% (median 42%) against 
+unprocessed data across 15 random 90/10 splits, taking mean RMSE from 0.224 to 0.115. The spread is wide 
+(roughly +11% to +80%) because each split's test set is only 8 samples. The swarm converges on truncation to the 
+signal-rich region plus SNV, which is a conventional manual choice for NIR.
+
+This approach is particularly useful for data where preprocessing choice is not obvious, such as the noisier 
+proprietary spectra it was developed for. 
 
 The [Kaggle notebook](https://www.kaggle.com/code/nikesh23/specopt-demo) shows the full train/test walkthrough.
 
