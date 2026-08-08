@@ -49,7 +49,7 @@ set of preprocessing conditions.
 
 ## Demonstration
 
-On the public Beer NIR dataset, optimise_preprocessing cuts PLS test RMSE by a mean of 43% (median 42%) against 
+On a public Beer NIR dataset, optimise_preprocessing cuts PLS test RMSE by a mean of 43% (median 42%) against 
 unprocessed data across 15 random 90/10 splits, taking mean RMSE from 0.224 to 0.115. The spread is wide 
 (roughly +11% to +80%) because each split's test set is only 8 samples. The swarm converges on truncation to the 
 signal-rich region plus SNV, which is a conventional manual choice for NIR.
