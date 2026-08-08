@@ -2,15 +2,12 @@
 
 [![Open in Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/nikesh23/specopt-demo)
 
-Choosing how to preprocess spectra for ML is usually done manually, separately from 
-the model hyperparameter optimisation it feeds into, even though the two decisions 
+Choosing how to preprocess IR spectra for ML is usually done manually, separately 
+from the model hyperparameter optimisation it feeds into, even though the two decisions 
 interact strongly.
 
 **specopt** searches over both jointly, minimising leave-one-out prediction error, 
-and hands back a ready-to-apply preprocessing pipeline.
-
-While **specopt** is aimed at chemometrics / spectroscopy (NIR, FTIR, Raman), it 
-works on any wide, correlated feature matrix.
+and returning a optimised preprocessing pipeline.
 
 ```python
 from specopt import optimise_preprocessing
@@ -27,9 +24,8 @@ X_train_p = result.transform(X_train)   # apply the pipeline to train
 X_test_p  = result.transform(X_test)    # and to held-out data
 ```
 
-`optimise_preprocessing` sees **training data only** and returns the best preprocessing
-conditions. The train/test split and the final model fit stay in your own code (see the
-notebook), so there is no risk of test data leakage.
+`optimise_preprocessing` only takes in training data negating the chance for test data 
+leakage into optimisation.
 
 ## Install
 
@@ -44,24 +40,12 @@ pip install .
 Dependencies (`numpy`, `scipy`, `scikit-learn`, `pyswarm`) install automatically.
 
 ## How it works
+The search space is composed of a minimal set of preprocessing steps (truncation, 
+Savitzky–Golay filtering, and Standard Normal Variate) expressed as single vectors.
 
-Every candidate pipeline is a single real vector (truncation window, Savitzky–Golay
-window / polyorder / derivative, SNV on/off). Particle swarm searches that space, and
-each candidate is scored by the best **leave-one-out CV RMSE** for a latent-variable model
-whose own hyperparameters (PLS/PCA components, or Ridge penalty) is retuned for that candidate.
-Categorical and integer choices are encoded as floats and rounded on decode (the SG
-window is encoded as `2·k+1` so it is always odd). Infeasible candidates, such as a
-window wider than the truncated spectrum, are rejected by a feasibility check before
-the expensive cross-validation runs.
-
-## What you can tune
-
-Arguments to `optimise_preprocessing`:
-
-- **Model**: `"pls"`, `"pcr"`, or `"ridge"`; component count / penalty is tuned internally.
-- **`max_components`**: cap on the latent-variable search.
-- **Search bounds**: `min_width`, `max_half_window`, `max_polyorder`, `max_deriv`.
-- **Swarm settings**: `swarmsize`, `maxiter`, `omega`, `phip`, `phig`, `random_state`.
+Particle swarm searches the space optimising for lowest **leave-one-out CV RMSE** obtained
+with model hyperparameters (PLS/PCA components, or Ridge penalty) optimised for each candidate
+set of preprocessing conditions. 
 
 ## Demonstration
 
@@ -89,11 +73,8 @@ src/specopt/
 ## Provenance
 
 This package generalises a chemometrics pipeline I built for predicting composition
-from IR/NIR spectra. It contains none of that original proprietary data or instrument
-I/O — only the modelling method, demonstrated here on the public
-[Beer NIR dataset](https://www.kaggle.com/datasets/robertoschimmenti/beer-nir).
-
-The approach is inspired by the coupled preprocessing–model optimisation idea in:
+from IR/NIR spectra. The approach is inspired by the coupled preprocessing–model 
+optimisation idea in:
 
 C. D. Kappatou, J. Odgers, S. García-Muñoz and R. Misener, *Ind. Eng. Chem. Res.*,
 2023, **62**, 6196–6213. [Open access](https://pmc.ncbi.nlm.nih.gov/articles/PMC10119938/)
