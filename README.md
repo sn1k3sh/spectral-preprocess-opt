@@ -22,7 +22,7 @@ The [Kaggle notebook](https://www.kaggle.com/code/nikesh23/specopt-demo) shows t
 
 ## Provenance
 
-This is a generalisation of a preprocessing pipeline I wrote in a previous internship to predicting chemical composition from IR/NIR spectra. The approach was inspired by the coupled preprocessing–model optimisation idea in:
+This is a generalisation of a preprocessing pipeline I wrote in a previous internship to predict chemical composition from IR/NIR spectra. The approach was inspired by the coupled preprocessing–model optimisation idea in:
 
 C. D. Kappatou, J. Odgers, S. García-Muñoz and R. Misener, *Ind. Eng. Chem. Res.*,
 2023, **62**, 6196–6213. [Open access](https://pmc.ncbi.nlm.nih.gov/articles/PMC10119938/)
